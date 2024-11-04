@@ -1,0 +1,199 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+struct Node *head = NULL;
+
+void insertAtTheEnd(int value)
+{
+    
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode -> data = value;
+    newNode -> next = NULL;
+
+    if(head == NULL)
+    {
+        head = newNode;
+    } 
+    else
+    {
+        struct Node *temp = head;
+
+        while(temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = newNode; 
+    }
+}
+
+
+void printLinkedList()
+{
+    struct Node *temp = head;
+
+    while(temp != NULL)
+    {
+        printf("%d -> ",temp->data);
+        temp = temp->next;
+    }
+    printf("NULL");
+}
+
+
+void insertAtTheBegining(int value)
+{
+
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    if(head == NULL)
+    {
+        head = newNode;
+    }
+    else
+    {
+        newNode->next = head;
+        head = newNode;
+    }
+}
+
+void insertAtTheMiddle(int place, int value)
+{
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    struct Node *temp = head;
+
+    for(int i=2;i<place;i++)
+    {
+        temp = temp->next;
+    }
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+void deleteFromStart()
+{
+    if(head == NULL)
+    {
+        printf("Empty LinkedList");
+        return;
+    }
+    
+    head = head->next;
+    
+}
+
+void DeleteFromTheMiddle(int place)
+{
+    struct Node *temp = head;
+
+    for(int i=2;i<place;i++)
+    {
+        temp = temp->next;
+    }
+    temp->next = temp->next->next;
+}
+
+
+void deleteFromEnd()
+{
+    if(head == NULL)
+    {
+        printf("Empty LinkedList");
+        return;
+    }
+    
+    struct Node *temp = head;
+    while(temp->next->next != NULL)
+    {
+        temp = temp->next;
+    }
+    temp->next = NULL;
+}
+
+void search(int value)
+{
+    struct Node *temp = head;
+    int c = 1;
+    bool flag = true;
+    while(temp != NULL)
+    {
+        if(temp->data == value)
+        {
+            printf("%d is present at position %d",value,c);
+            flag = false;
+        }
+        temp = temp->next;
+        c++;
+    }
+    if(flag)
+    {
+         printf("%d is present is not present",value);
+    }
+}
+
+void sortLinkedList()
+{
+    struct Node *temp1 = head;
+    
+    
+    while(temp1->next != NULL)
+    {
+        struct Node *temp2 = temp1;
+        while(temp2->next != NULL)
+        {
+            if(temp2->data > temp2->next->data)
+            {
+                int tempData = temp2->data;
+                temp2->data = temp2->next->data;
+                temp2->next->data = tempData;
+            }
+            temp2=temp2->next;
+        }
+        temp1 = temp1->next;
+    }
+    
+}
+
+int main()
+{
+    insertAtTheEnd(40);
+    insertAtTheEnd(20);
+    insertAtTheEnd(30);
+    insertAtTheEnd(10);
+    insertAtTheEnd(50);
+    insertAtTheEnd(40);
+    insertAtTheBegining(5);
+    insertAtTheBegining(1);
+    insertAtTheMiddle(4,15);
+    printf("LinkedList: ");
+    printLinkedList();
+    printf("\nDelelte from the Middle: ");
+    DeleteFromTheMiddle(4);
+    printLinkedList();
+    printf("\nDelete From End: ");
+    deleteFromEnd();
+    printLinkedList();
+    printf("\nDelete From start: ");
+    deleteFromStart();
+    printLinkedList();
+    printf("\n");
+    search(30);
+    printf("\n");
+    sortLinkedList();
+    printf("\n");
+    printLinkedList();
+    printf("\nSorting: ");
+    sortLinkedList();
+    printLinkedList();
+}
